@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cranberry" data-font="serif">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hearth &amp; Harvest · Holiday Meal Planner (Free Demo)</title>
+<style>
+/* ============ HEARTH & HARVEST IDENTITY · THEMES ============ */
+:root{
+  --r-sm:10px; --r-md:16px; --r-lg:22px;
+  --shadow-1:0 1px 2px rgba(58,34,38,.06);
+  --shadow-2:0 1px 2px rgba(58,34,38,.05),0 10px 28px -8px rgba(58,34,38,.14);
+  --shadow-3:0 2px 6px rgba(58,34,38,.08),0 18px 44px -12px rgba(58,34,38,.20);
+}
+/* Cranberry & Gold — light default */
+[data-theme="cranberry"]{
+  --bg:#FBF6EF; --bg-soft:#F5EDDF; --card:#FFFFFF; --card-soft:#FDFAF4;
+  --ink:#3A2226; --ink-soft:#7A5C5C; --ink-faint:#A88F86;
+  --line:#EAD9C6; --line-soft:#F2E6D4;
+  --accent:#8E2434; --accent-deep:#6E1A27; --accent-soft:#F5DEDD; --accent-ghost:#FAEFEF;
+  --gold:#B98A1F; --gold-deep:#8F6A15; --gold-soft:#F7ECD2; --gold-ghost:#FCF6E7;
+  --good:#5E8F6A; --good-soft:#E3EFE4; --warn:#C08A2D; --warn-soft:#F7ECD4; --bad:#C05B5B; --bad-soft:#F7DEDE;
+  --input-bg:#FDFAF4; --shadow-color:58,34,38;
+}
+/* Forest Elegance */
+[data-theme="forest"]{
+  --bg:#F4F7F1; --bg-soft:#E8EFE2; --card:#FFFFFF; --card-soft:#FAFCF8;
+  --ink:#1F2E24; --ink-soft:#5B6E5F; --ink-faint:#8B9A8D;
+  --line:#D6E2CC; --line-soft:#E4ECDC;
+  --accent:#2E5B3F; --accent-deep:#1E4229; --accent-soft:#DDEBD9; --accent-ghost:#EFF5EC;
+  --gold:#A8842C; --gold-deep:#7E6420; --gold-soft:#F3E8CC; --gold-ghost:#FAF4E2;
+  --good:#4E7D58; --good-soft:#DDEBD9; --warn:#B07E24; --warn-soft:#F5E9CB; --bad:#B05353; --bad-soft:#F5DADA;
+  --input-bg:#FAFCF8; --shadow-color:31,46,36;
+}
+/* Winter White */
+[data-theme="winter"]{
+  --bg:#F5F8FB; --bg-soft:#E9F0F6; --card:#FFFFFF; --card-soft:#F9FCFE;
+  --ink:#243244; --ink-soft:#5C6E84; --ink-faint:#8E9FB2;
+  --line:#D8E2EC; --line-soft:#E6EDF4;
+  --accent:#3E6B8E; --accent-deep:#2C4F6B; --accent-soft:#DCE8F2; --accent-ghost:#EDF3F9;
+  --gold:#A8842C; --gold-deep:#7E6420; --gold-soft:#F3E8CC; --gold-ghost:#FAF4E2;
+  --good:#5E8F6A; --good-soft:#E3EFE4; --warn:#C08A2D; --warn-soft:#F7ECD4; --bad:#C05B5B; --bad-soft:#F7DEDE;
+  --input-bg:#F9FCFE; --shadow-color:36,50,68;
+}
+/* Midnight Feast — dark */
+[data-theme="midnight"]{
+  --bg:#171216; --bg-soft:#1F181D; --card:#241B21; --card-soft:#2A2027;
+  --ink:#F2E8DC; --ink-soft:#C2AC9C; --ink-faint:#8D7668;
+  --line:#3D2E35; --line-soft:#32262D;
+  --accent:#D4717F; --accent-deep:#E89AA4; --accent-soft:#4A2730; --accent-ghost:#382028;
+  --gold:#D4A94E; --gold-deep:#E5BE6B; --gold-soft:#4A3A1C; --gold-ghost:#3A2E16;
+  --good:#8FC79B; --good-soft:#2C4633; --warn:#D9A94F; --warn-soft:#4A3A1E; --bad:#DE8484; --bad-soft:#4E2A2A;
+  --input-bg:#1F181D; --shadow-color:0,0,0;
+}
+/* ============ FONTS ============ */
+[data-font="serif"]{ --font-body:Georgia,'Times New Roman',serif; --font-display:Georgia,'Times New Roman',serif; }
+[data-font="sans"]{ --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif; --font-display:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif; }
+[data-font="elegant"]{ --font-body:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif; --font-display:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif; }
+/* ============ BASE ============ */
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font-body); font-size:15px; line-height:1.55;
+  transition:background .35s ease,color .35s ease;
+}
+::selection{background:var(--accent-soft);}
+h1,h2,h3,h4{font-family:var(--font-display); margin:0; font-weight:650; letter-spacing:-.01em;}
+p{margin:0 0 .8em;}
+button{font-family:inherit; cursor:pointer;}
+input,select,textarea{font-family:inherit; font-size:14px; color:var(--ink); background:var(--input-bg); border:1px solid var(--line); border-radius:var(--r-sm); padding:10px 12px; width:100%; transition:border-color .2s, box-shadow .2s;}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+input[type="checkbox"]{width:auto; accent-color:var(--accent);}
+label{font-size:12px; font-weight:600; color:var(--ink-soft); display:block; margin-bottom:6px; letter-spacing:.02em;}
+/* ============ LAYOUT ============ */
+.shell{max-width:1180px; margin:0 auto; padding:0 22px 90px;}
+.topbar{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid var(--line-soft);}
+.topbar-inner{max-width:1180px; margin:0 auto; padding:12px 22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+.brand{display:flex; align-items:center; gap:12px; margin-right:auto;}
+.brand-mark{width:42px; height:42px; border-radius:14px; background:linear-gradient(135deg,var(--accent),var(--accent-deep)); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-1); flex:none;}
+.brand-mark svg{width:23px; height:23px; stroke:#FFF; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+.brand-name{font-family:var(--font-display); font-size:19px; font-weight:700; letter-spacing:-.01em;}
+.brand-sub{font-size:10.5px; color:var(--ink-faint); letter-spacing:.16em; text-transform:uppercase; font-weight:600;}
+.dock{display:flex; gap:6px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px; box-shadow:var(--shadow-1); align-items:center;}
+.theme-dot{width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:pointer; position:relative; transition:transform .18s; padding:0;}
+.theme-dot:hover{transform:scale(1.12);}
+.theme-dot.active{border-color:var(--ink);}
+.theme-dot[data-set-theme="cranberry"]{background:linear-gradient(135deg,#FBF6EF 50%,#8E2434 50%);}
+.theme-dot[data-set-theme="forest"]{background:linear-gradient(135deg,#F4F7F1 50%,#2E5B3F 50%);}
+.theme-dot[data-set-theme="winter"]{background:linear-gradient(135deg,#F5F8FB 50%,#3E6B8E 50%);}
+.theme-dot[data-set-theme="midnight"]{background:linear-gradient(135deg,#241B21 50%,#D4A94E 50%);}
+.font-dock button{border:none; background:transparent; color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 11px; border-radius:999px;}
+.font-dock button.active{background:var(--accent-soft); color:var(--accent-deep);}
+.mode-btn{border:none; background:transparent; color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 11px; border-radius:999px; display:flex; align-items:center; gap:6px;}
+.mode-btn svg{width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round;}
+/* ============ NAV ============ */
+.nav{display:flex; gap:6px; overflow-x:auto; padding:18px 0 4px; scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav-btn{flex:none; border:1px solid var(--line); background:var(--card); color:var(--ink-soft); border-radius:999px; padding:10px 18px; font-size:13.5px; font-weight:600; display:flex; align-items:center; gap:8px; transition:all .22s; box-shadow:var(--shadow-1);}
+.nav-btn svg{width:16px; height:16px; opacity:.75; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+.nav-btn:hover{transform:translateY(-1px); box-shadow:var(--shadow-2);}
+.nav-btn.active{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+.nav-btn.active svg{opacity:1;}
+/* ============ CARDS / GRID ============ */
+.view{display:none; animation:fadeUp .35s ease;}
+.view.active{display:block;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+.page-head{margin:26px 0 18px;}
+.page-head h2{font-size:30px; letter-spacing:-.02em;}
+.page-head p{color:var(--ink-soft); margin:.4em 0 0; font-size:14.5px;}
+.grid{display:grid; gap:14px;}
+.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media(max-width:900px){.grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr));} .grid.cols-3{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:620px){.grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;}}
+.card{background:var(--card); border:1px solid var(--line-soft); border-radius:var(--r-lg); padding:20px; box-shadow:var(--shadow-1); transition:transform .2s, box-shadow .2s;}
+.card.hoverable:hover{transform:translateY(-2px); box-shadow:var(--shadow-2);}
+.card h3{font-size:17px; margin-bottom:4px;}
+.card .sub{font-size:13px; color:var(--ink-soft);}
+.stat-num{font-family:var(--font-display); font-size:34px; font-weight:700; letter-spacing:-.02em; line-height:1.1;}
+.stat-label{font-size:12px; color:var(--ink-soft); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-top:6px;}
+.stat-card{position:relative; overflow:hidden;}
+.stat-card::after{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); opacity:.85;}
+.countdown-hero{background:linear-gradient(135deg,var(--accent-deep),var(--accent) 55%,var(--gold-deep)); color:#FFF; border:none; position:relative; overflow:hidden;}
+.countdown-hero::before{content:""; position:absolute; inset:0; background:radial-gradient(600px 200px at 85% -20%, rgba(255,255,255,.22), transparent 60%); pointer-events:none;}
+.countdown-hero h3,.countdown-hero .sub{color:rgba(255,255,255,.92);}
+.countdown-big{font-family:var(--font-display); font-size:52px; font-weight:700; letter-spacing:-.03em; line-height:1;}
+.countdown-big small{font-size:16px; font-weight:500; letter-spacing:.08em;}
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:10px 20px; font-size:13.5px; font-weight:650; transition:all .2s; box-shadow:var(--shadow-1);}
+.btn svg{width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round;}
+.btn:hover{transform:translateY(-1px); box-shadow:var(--shadow-2);}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-deep)); color:#FFF; border:none;}
+.btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-deep)); color:#FFF; border:none;}
+.btn.ghost{background:transparent; box-shadow:none;}
+.btn.small{padding:7px 14px; font-size:12.5px;}
+.btn.danger{color:var(--bad); border-color:var(--bad);}
+.icon-btn{border:1px solid var(--line); background:var(--card); border-radius:10px; width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; color:var(--ink-soft); transition:all .18s; flex:none;}
+.icon-btn svg{width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.icon-btn:hover{color:var(--accent); border-color:var(--accent);}
+.icon-btn.danger:hover{color:var(--bad); border-color:var(--bad);}
+.toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0 0 16px;}
+.toolbar .spacer{flex:1;}
+/* ============ LISTS / TABLES ============ */
+.row-item{display:flex; align-items:center; gap:12px; padding:13px 4px; border-bottom:1px solid var(--line-soft);}
+.row-item:last-child{border-bottom:none;}
+.row-main{flex:1; min-width:0;}
+.row-title{font-weight:650; font-size:14.5px;}
+.row-meta{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+.pill{display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; letter-spacing:.03em; padding:4px 11px; border-radius:999px; white-space:nowrap;}
+.pill.accent{background:var(--accent-soft); color:var(--accent-deep);}
+.pill.gold{background:var(--gold-soft); color:var(--gold-deep);}
+.pill.good{background:var(--good-soft); color:var(--good);}
+.pill.warn{background:var(--warn-soft); color:var(--warn);}
+.pill.bad{background:var(--bad-soft); color:var(--bad);}
+.pill.neutral{background:var(--bg-soft); color:var(--ink-soft);}
+.progress{height:8px; background:var(--bg-soft); border-radius:999px; overflow:hidden;}
+.progress > i{display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--gold)); border-radius:999px; transition:width .5s ease;}
+.progress.good > i{background:var(--good);}
+.empty{text-align:center; padding:38px 18px; color:var(--ink-faint); font-size:14px;}
+.empty svg{width:38px; height:38px; stroke:currentColor; fill:none; stroke-width:1.4; margin-bottom:10px; opacity:.6;}
+/* ============ MODAL ============ */
+.modal-back{position:fixed; inset:0; background:rgba(20,10,12,.5); backdrop-filter:blur(4px); z-index:100; display:none; align-items:flex-start; justify-content:center; padding:40px 18px; overflow-y:auto;}
+.modal-back.open{display:flex; animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+.modal{background:var(--card); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-3); width:100%; max-width:560px; padding:26px; animation:fadeUp .3s ease;}
+.modal.wide{max-width:720px;}
+.modal h3{font-size:20px; margin-bottom:4px;}
+.modal .m-sub{font-size:13px; color:var(--ink-soft); margin-bottom:18px;}
+.field{margin-bottom:14px;}
+.field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+.modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap;}
+.ing-row{display:grid; grid-template-columns:1fr 90px 110px 130px 36px; gap:8px; margin-bottom:8px; align-items:center;}
+@media(max-width:560px){.ing-row{grid-template-columns:1fr 70px 36px;} .ing-row .hide-sm{display:none;}}
+.step-row{display:flex; gap:10px; margin-bottom:8px; align-items:flex-start;}
+.step-num{flex:none; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent-deep); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; margin-top:6px;}
+/* ============ TIMELINE ============ */
+.tl{position:relative; padding-left:26px;}
+.tl::before{content:""; position:absolute; left:8px; top:8px; bottom:8px; width:2px; background:linear-gradient(var(--accent),var(--gold)); border-radius:2px; opacity:.5;}
+.tl-item{position:relative; padding:0 0 18px;}
+.tl-item::before{content:""; position:absolute; left:-24px; top:5px; width:12px; height:12px; border-radius:50%; background:var(--card); border:3px solid var(--accent);}
+.tl-item.done::before{background:var(--good); border-color:var(--good);}
+.tl-item.done .tl-title{text-decoration:line-through; color:var(--ink-faint);}
+.tl-time{font-size:12px; font-weight:700; color:var(--accent-deep); letter-spacing:.04em; text-transform:uppercase;}
+.tl-title{font-weight:650; font-size:14.5px; margin:2px 0;}
+.tl-meta{font-size:12.5px; color:var(--ink-soft);}
+/* ============ MISC ============ */
+.divider{height:1px; background:var(--line-soft); margin:16px 0;}
+.section-title{font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin:22px 0 12px; display:flex; align-items:center; gap:10px;}
+.section-title::after{content:""; flex:1; height:1px; background:var(--line-soft);}
+.check-line{display:flex; align-items:flex-start; gap:10px; padding:9px 4px; border-bottom:1px solid var(--line-soft); font-size:14px;}
+.check-line:last-child{border-bottom:none;}
+.check-line input{margin-top:3px; width:17px; height:17px; flex:none;}
+.check-line.done span{color:var(--ink-faint); text-decoration:line-through;}
+.alert-strip{display:flex; gap:10px; align-items:flex-start; background:var(--warn-soft); border:1px solid var(--warn); border-radius:var(--r-md); padding:12px 16px; font-size:13.5px; margin-bottom:14px;}
+.alert-strip svg{width:17px; height:17px; flex:none; stroke:var(--warn); fill:none; stroke-width:1.8; margin-top:2px;}
+.kbd-hint{font-size:11.5px; color:var(--ink-faint);}
+.toast{position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--bg); padding:12px 22px; border-radius:999px; font-size:13.5px; font-weight:600; opacity:0; transition:all .3s; z-index:200; pointer-events:none; box-shadow:var(--shadow-3);}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+footer.app-foot{text-align:center; color:var(--ink-faint); font-size:12px; padding:30px 0 10px; letter-spacing:.04em;}
+@media print{.topbar,.nav,.toolbar,.modal-back,.toast{display:none !important;} .view{display:block !important;}}
+</style>
+</head>
+<body>
+
+<!-- ===== LEDGERLOOPSTUDIO DEMO BAR ===== -->
+<div id="lls-demo-bar" style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#8E2434;color:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-align:center;padding:9px 12px;box-shadow:0 2px 12px rgba(0,0,0,.18);line-height:1.4;">
+  <span style="margin-right:6px;">&#127876;</span> FREE DEMO &mdash; LedgerLoopStudio
+  <span style="opacity:.65;font-weight:400;margin:0 8px;">|</span>
+  <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener" style="color:#FFFFFF;text-decoration:underline;text-underline-offset:2px;font-weight:700;">Get the full version on Etsy</a>
+  <span style="opacity:.65;font-weight:400;margin-left:8px;">(10 entries max in demo)</span><span id="demo-entry-counter" style="opacity:.85;font-weight:600;margin-left:12px;background:rgba(255,255,255,.2);padding:2px 10px;border-radius:10px;">0/10 entries used</span>
+</div>
+<script>
+(function(){
+  // Push body content below the demo bar so nothing is hidden
+  function padBody(){
+    var bar = document.getElementById('lls-demo-bar');
+    if (bar) document.body.style.paddingTop = bar.offsetHeight + 'px';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', padBody);
+  else padBody();
+  window.addEventListener('resize', padBody);
+  setTimeout(padBody, 500);
+})();
+</script>
+<!-- ===== /DEMO BAR ===== -->
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 2c1 4-3 5-3 9a5 5 0 0 0 10 0c0-4-4-5-3-9"/><path d="M12 22v-8"/><path d="M9 14h6"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Hearth &amp; Harvest</div>
+        <div class="brand-sub">Holiday Meal Planner</div>
+      </div>
+    </div>
+    <div class="dock theme-dock" role="group" aria-label="Theme">
+      <button class="theme-dot active" data-set-theme="cranberry" title="Cranberry &amp; Gold" aria-label="Cranberry theme"></button>
+      <button class="theme-dot" data-set-theme="forest" title="Forest Elegance" aria-label="Forest theme"></button>
+      <button class="theme-dot" data-set-theme="winter" title="Winter White" aria-label="Winter theme"></button>
+      <button class="theme-dot" data-set-theme="midnight" title="Midnight Feast" aria-label="Midnight theme"></button>
+    </div>
+    <div class="dock font-dock" role="group" aria-label="Font">
+      <button data-set-font="serif" class="active" title="Serif">Ag</button>
+      <button data-set-font="sans" title="Sans">Ag</button>
+      <button data-set-font="elegant" title="Elegant">Ag</button>
+    </div>
+    <div class="dock">
+      <button class="mode-btn" id="modeToggle" title="Toggle light / dark">
+        <svg viewBox="0 0 24 24" id="modeIcon"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+        <span id="modeLabel">Dark</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="nav" id="mainNav" aria-label="Sections"></nav>
+
+  <main>
+    <section class="view" id="view-dashboard"></section>
+    <section class="view" id="view-menu"></section>
+    <section class="view" id="view-guests"></section>
+    <section class="view" id="view-grocery"></section>
+    <section class="view" id="view-recipes"></section>
+    <section class="view" id="view-timeline"></section>
+    <section class="view" id="view-budget"></section>
+    <section class="view" id="view-settings"></section>
+  </main>
+
+  <footer class="app-foot">HEARTH &amp; HARVEST · HOLIDAY MEAL PLANNER · LEDGERLOOPSTUDIO</footer>
+</div>
+
+<div class="modal-back" id="modalBack">
+  <div class="modal" id="modalBox" role="dialog" aria-modal="true"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ================================================================
+   HEARTH & HARVEST — Holiday Meal Planner
+   Offline single-file app. All state in localStorage.
+================================================================ */
+const LS_KEY = "hmp-state-v1";
+const COURSES = ["Appetizers","Mains","Sides","Desserts","Drinks"];
+const SECTIONS = ["Produce","Dairy & Eggs","Meat & Seafood","Bakery","Pantry","Frozen","Beverages","Other"];
+const DIETS = ["Vegetarian","Vegan","Gluten-Free","Nut Allergy","Dairy-Free","Other"];
+const BUDGET_CATS = ["Groceries","Drinks","Decorations","Tableware","Other"];
+const RSVP = ["Invited","Confirmed","Declined"];
+
+const $ = (sel, el) => (el||document).querySelector(sel);
+const $$ = (sel, el) => Array.from((el||document).querySelectorAll(sel));
+const uid = () => "id" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money = n => "$" + (Number(n)||0).toFixed(2);
+const ICONS = {
+  dashboard:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  menu:'<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.5"/></svg>',
+  guests:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.9.3 5.2 2.1 6 5.4"/></svg>',
+  grocery:'<svg viewBox="0 0 24 24"><path d="M6 7h12l1.5 13.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>',
+  recipes:'<svg viewBox="0 0 24 24"><path d="M5 3h11a2 2 0 0 1 2 2v16l-4-3-4 3-4-3-3 2.2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6"/></svg>',
+  timeline:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
+  budget:'<svg viewBox="0 0 24 24"><path d="M12 2v20M17 6.5c0-2-2.2-3-5-3s-5 1-5 3 2 2.6 5 3.2 5 1.3 5 3.3-2.2 3-5 3-5-1-5-3"/></svg>',
+  settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  edit:'<svg viewBox="0 0 24 24"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>',
+  trash:'<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>',
+  x:'<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+  check:'<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>',
+  alert:'<svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
+  wand:'<svg viewBox="0 0 24 24"><path d="M15 4V2M15 16v-2M11.5 6.5l-1.4-1.4M20.6 15.6l-1.4-1.4M18 10l6-6M5 15l-3 3M8.5 10.5a4 4 0 1 0 5.7 5.7L19 21"/></svg>',
+  clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>'
+};
+const NAV = [
+  ["dashboard","Dashboard",ICONS.dashboard],
+  ["menu","Menu",ICONS.menu],
+  ["guests","Guests",ICONS.guests],
+  ["grocery","Grocery List",ICONS.grocery],
+  ["recipes","Recipes",ICONS.recipes],
+  ["timeline","Timeline",ICONS.timeline],
+  ["budget","Budget",ICONS.budget],
+  ["settings","Settings",ICONS.settings]
+];
+</script>
+<script>
+"use strict";
+/* ================= STATE ================= */
+function sampleData(){
+  const dishes = [
+    {id:"d1", name:"Honey-Glazed Ham", course:"Mains", servings:10, cook:"Emma", notes:"Score the fat in a diamond pattern before glazing.",
+     ingredients:[
+       {name:"Bone-in smoked ham", qty:8, unit:"lb", section:"Meat & Seafood"},
+       {name:"Honey", qty:0.5, unit:"cup", section:"Pantry"},
+       {name:"Brown sugar", qty:0.5, unit:"cup", section:"Pantry"},
+       {name:"Dijon mustard", qty:2, unit:"tbsp", section:"Pantry"},
+       {name:"Whole cloves", qty:1, unit:"tsp", section:"Pantry"}]},
+    {id:"d2", name:"Herb Roast Turkey Breast", course:"Mains", servings:8, cook:"Marcus", notes:"Rest 20 min before carving.",
+     ingredients:[
+       {name:"Boneless turkey breast", qty:6, unit:"lb", section:"Meat & Seafood"},
+       {name:"Unsalted butter", qty:0.5, unit:"cup", section:"Dairy & Eggs"},
+       {name:"Fresh rosemary", qty:2, unit:"tbsp", section:"Produce"},
+       {name:"Fresh thyme", qty:2, unit:"tbsp", section:"Produce"},
+       {name:"Garlic cloves", qty:4, unit:"pcs", section:"Produce"}]},
+    {id:"d3", name:"Garlic Mashed Potatoes", course:"Sides", servings:10, cook:"Emma", notes:"Warm the cream before adding.",
+     ingredients:[
+       {name:"Yukon Gold potatoes", qty:5, unit:"lb", section:"Produce"},
+       {name:"Unsalted butter", qty:0.5, unit:"cup", section:"Dairy & Eggs"},
+       {name:"Heavy cream", qty:1, unit:"cup", section:"Dairy & Eggs"},
+       {name:"Garlic cloves", qty:6, unit:"pcs", section:"Produce"}]},
+    {id:"d4", name:"Honey Roasted Carrots", course:"Sides", servings:8, cook:"Priya", notes:"",
+     ingredients:[
+       {name:"Carrots", qty:3, unit:"lb", section:"Produce"},
+       {name:"Honey", qty:0.25, unit:"cup", section:"Pantry"},
+       {name:"Unsalted butter", qty:3, unit:"tbsp", section:"Dairy & Eggs"},
+       {name:"Fresh thyme", qty:1, unit:"tbsp", section:"Produce"}]},
+    {id:"d5", name:"Winter Kale & Pomegranate Salad", course:"Appetizers", servings:8, cook:"Priya", notes:"Massage kale with dressing 10 min ahead.",
+     ingredients:[
+       {name:"Curly kale", qty:2, unit:"bunches", section:"Produce"},
+       {name:"Pomegranate seeds", qty:1, unit:"cup", section:"Produce"},
+       {name:"Feta cheese", qty:0.75, unit:"cup", section:"Dairy & Eggs"},
+       {name:"Walnuts", qty:0.5, unit:"cup", section:"Pantry"},
+       {name:"Olive oil", qty:0.25, unit:"cup", section:"Pantry"}]},
+    {id:"d6", name:"Cranberry Brie Bites", course:"Appetizers", servings:12, cook:"Marcus", notes:"Serve warm.",
+     ingredients:[
+       {name:"Puff pastry sheet", qty:1, unit:"pcs", section:"Frozen"},
+       {name:"Brie wheel", qty:8, unit:"oz", section:"Dairy & Eggs"},
+       {name:"Cranberry sauce", qty:0.5, unit:"cup", section:"Pantry"}]},
+    {id:"d7", name:"Chocolate Yule Log", course:"Desserts", servings:10, cook:"Emma", notes:"Make a day ahead — tastes better chilled.",
+     ingredients:[
+       {name:"All-purpose flour", qty:0.75, unit:"cup", section:"Pantry"},
+       {name:"Cocoa powder", qty:0.33, unit:"cup", section:"Pantry"},
+       {name:"Eggs", qty:6, unit:"pcs", section:"Dairy & Eggs"},
+       {name:"Granulated sugar", qty:0.75, unit:"cup", section:"Pantry"},
+       {name:"Heavy cream", qty:1.5, unit:"cup", section:"Dairy & Eggs"},
+       {name:"Dark chocolate", qty:8, unit:"oz", section:"Pantry"}]},
+    {id:"d8", name:"Slow-Simmer Mulled Wine", course:"Drinks", servings:12, cook:"Marcus", notes:"Keep warm, never boil.",
+     ingredients:[
+       {name:"Dry red wine", qty:2, unit:"bottles", section:"Beverages"},
+       {name:"Oranges", qty:2, unit:"pcs", section:"Produce"},
+       {name:"Cinnamon sticks", qty:4, unit:"pcs", section:"Pantry"},
+       {name:"Star anise", qty:3, unit:"pcs", section:"Pantry"},
+       {name:"Honey", qty:0.25, unit:"cup", section:"Pantry"}]}
+  ];
+  return {
+    settings:{ holidayName:"Christmas Dinner", holidayDate:"2026-12-25", servingTime:"18:00", budgetTotal:350, theme:"cranberry", font:"serif" },
+    dishes,
+    guests:[
+      {id:"g1", name:"Emma & James Carter", adults:2, kids:0, diets:[], rsvp:"Confirmed", notes:"Hosting"},
+      {id:"g2", name:"Marcus Webb", adults:1, kids:0, diets:["Nut Allergy"], rsvp:"Confirmed", notes:"Bringing wine"},
+      {id:"g3", name:"Priya Sharma", adults:1, kids:0, diets:["Vegetarian"], rsvp:"Confirmed", notes:""},
+      {id:"g4", name:"The Nguyen Family", adults:2, kids:2, diets:["Gluten-Free"], rsvp:"Confirmed", notes:"Lily (8) is gluten-free"},
+      {id:"g5", name:"Grandma Rose", adults:1, kids:0, diets:["Dairy-Free"], rsvp:"Invited", notes:""}
+    ],
+    recipes:{
+      d1:{prepMin:20, cookMin:150, servings:10, ingredients:[
+          {name:"Bone-in smoked ham", qty:"8 lb"},{name:"Honey", qty:"1/2 cup"},
+          {name:"Brown sugar", qty:"1/2 cup"},{name:"Dijon mustard", qty:"2 tbsp"},
+          {name:"Whole cloves", qty:"1 tsp"}],
+        steps:["Heat oven to 325°F. Score the ham fat in a diamond pattern and stud with cloves.",
+          "Whisk honey, brown sugar and Dijon; brush half over the ham.",
+          "Bake 2 hours, basting every 30 minutes with remaining glaze.",
+          "Rest 20 minutes, then carve and serve warm."],
+        notes:"A meat thermometer should read 140°F at the thickest point."},
+      d3:{prepMin:25, cookMin:30, servings:10, ingredients:[
+          {name:"Yukon Gold potatoes", qty:"5 lb, quartered"},{name:"Garlic cloves", qty:"6, smashed"},
+          {name:"Unsalted butter", qty:"1/2 cup"},{name:"Heavy cream", qty:"1 cup, warmed"},
+          {name:"Salt & pepper", qty:"to taste"}],
+        steps:["Boil potatoes and garlic in salted water until fork-tender, about 25 minutes.",
+          "Drain well and return to the hot pot for 1 minute to steam dry.",
+          "Mash with butter, then beat in warm cream until silky.",
+          "Season boldly with salt and pepper. Keep warm covered."],
+        notes:"Never use a food processor — it makes them gummy."},
+      d7:{prepMin:40, cookMin:12, servings:10, ingredients:[
+          {name:"Eggs", qty:"6, room temp"},{name:"Granulated sugar", qty:"3/4 cup"},
+          {name:"All-purpose flour", qty:"3/4 cup"},{name:"Cocoa powder", qty:"1/3 cup"},
+          {name:"Heavy cream", qty:"1 1/2 cups"},{name:"Dark chocolate", qty:"8 oz, chopped"}],
+        steps:["Heat oven to 350°F. Line a jelly-roll pan with parchment.",
+          "Whip eggs and sugar until thick and pale, 5 minutes. Fold in sifted flour and cocoa.",
+          "Spread in pan; bake 12 minutes. Roll warm in a sugared towel and cool.",
+          "Unroll, fill with whipped ganache, re-roll, chill 4 hours. Dust with cocoa 'bark' lines."],
+        notes:"Roll while warm or it will crack. Tastes even better on day two."}
+    },
+    groceryManual:[ {id:"gm1", name:"Paper napkins (holiday)", qty:2, unit:"packs", section:"Other"} ],
+    groceryChecked:{},
+    tasks:[
+      {id:"t1", title:"Buy all groceries", datetime:"2026-12-23T10:00", kind:"custom", done:true, notes:"Use the grocery list in this app"},
+      {id:"t2", title:"Bake the Yule Log", datetime:"2026-12-24T15:00", kind:"cook", dishId:"d7", done:false, notes:"Chill overnight"},
+      {id:"t3", title:"Prep salad & chop vegetables", datetime:"2026-12-25T14:00", kind:"prep", done:false, notes:""},
+      {id:"t4", title:"Ham goes in the oven", datetime:"2026-12-25T15:00", kind:"cook", dishId:"d1", done:false, notes:"325°F, baste every 30 min"},
+      {id:"t5", title:"Set the table", datetime:"2026-12-25T16:30", kind:"custom", done:false, notes:"Candles, name cards, mulled wine on stove"},
+      {id:"t6", title:"Dinner is served", datetime:"2026-12-25T18:00", kind:"custom", done:false, notes:""}
+    ],
+    expenses:[
+      {id:"e1", desc:"Weekly grocery run (produce + dairy)", cat:"Groceries", amount:96.40},
+      {id:"e2", desc:"Ham + turkey breast", cat:"Groceries", amount:64.00},
+      {id:"e3", desc:"Red wine (4 bottles) + cider", cat:"Drinks", amount:45.00},
+      {id:"e4", desc:"Candles & table runner", cat:"Decorations", amount:32.00},
+      {id:"e5", desc:"Cloth napkins", cat:"Tableware", amount:18.50}
+    ]
+  };
+}
+let S = load();
+function load(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.settings) return d; }
+  }catch(e){}
+  return sampleData();
+}
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){} }
+function resetDemo(){ S = sampleData(); save(); applyThemeFont(); render(); toast("Demo data restored"); }
+
+/* ================= THEME / FONT / MODE ================= */
+function applyThemeFont(){
+  document.documentElement.setAttribute("data-theme", S.settings.theme||"cranberry");
+  document.documentElement.setAttribute("data-font", S.settings.font||"serif");
+  $$(".theme-dot").forEach(b => b.classList.toggle("active", b.dataset.setTheme === S.settings.theme));
+  $$(".font-dock button").forEach(b => b.classList.toggle("active", b.dataset.setFont === S.settings.font));
+  const dark = S.settings.theme === "midnight";
+  $("#modeLabel").textContent = dark ? "Light" : "Dark";
+}
+function setTheme(t){ S.settings.theme = t; save(); applyThemeFont(); }
+function setFont(f){ S.settings.font = f; save(); applyThemeFont(); }
+function toggleMode(){ setTheme(S.settings.theme === "midnight" ? "cranberry" : "midnight"); }
+
+/* ================= HELPERS ================= */
+let toastTimer;
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove("show"), 2400);
+}
+function openModal(html, wide){
+  const box = $("#modalBox"); box.className = "modal" + (wide ? " wide" : "");
+  box.innerHTML = html; $("#modalBack").classList.add("open");
+}
+function closeModal(){ $("#modalBack").classList.remove("open"); }
+$("#modalBack").addEventListener("click", e => { if(e.target.id === "modalBack") closeModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+function fmtDate(iso){
+  if(!iso) return "";
+  const d = new Date(iso + (iso.length===10 ? "T12:00:00" : ""));
+  return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+}
+function fmtTime(iso){
+  if(!iso || iso.length<=10) return "";
+  const d = new Date(iso);
+  return d.toLocaleTimeString(undefined,{hour:"numeric", minute:"2-digit"});
+}
+function fmtDateTime(iso){
+  if(!iso) return "";
+  const hasTime = iso.length > 10;
+  return fmtDate(iso.slice(0,10)) + (hasTime ? " · " + fmtTime(iso) : "");
+}
+function daysUntil(dateStr){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const d = new Date(dateStr + "T12:00:00");
+  return Math.floor((d - now)/86400000);
+}
+function confirmedHeadcount(){
+  return S.guests.filter(g=>g.rsvp==="Confirmed").reduce((a,g)=>a+(+g.adults||0)+(+g.kids||0),0);
+}
+function allDiets(){
+  const m = {};
+  S.guests.forEach(g => (g.diets||[]).forEach(d => { m[d]=(m[d]||0)+1; }));
+  return m;
+}
+function totalSpent(){ return S.expenses.reduce((a,e)=>a+(+e.amount||0),0); }
+
+/* ---- grocery consolidation ---- */
+function consolidatedGrocery(){
+  const map = new Map();
+  S.dishes.forEach(d => (d.ingredients||[]).forEach(ing => {
+    const key = "auto|" + ing.name.trim().toLowerCase() + "|" + (ing.unit||"").trim().toLowerCase();
+    if(!map.has(key)) map.set(key, {key, name:ing.name.trim(), qty:Number(ing.qty)||0, unit:(ing.unit||"").trim(), section:ing.section||"Other", auto:true, from:[d.name]});
+    else { const e = map.get(key); e.qty += Number(ing.qty)||0; if(!e.from.includes(d.name)) e.from.push(d.name); }
+  }));
+  S.groceryManual.forEach(m => {
+    map.set("man|"+m.id, {key:"man|"+m.id, name:m.name, qty:Number(m.qty)||0, unit:m.unit||"", section:m.section||"Other", auto:false, manId:m.id});
+  });
+  return Array.from(map.values());
+}
+function groceryStats(){
+  const items = consolidatedGrocery();
+  const done = items.filter(i => S.groceryChecked[i.key]).length;
+  return {total:items.length, done, pct: items.length ? Math.round(done/items.length*100) : 0};
+}
+function dishById(id){ return S.dishes.find(d=>d.id===id); }
+</script>
+<script>
+"use strict";
+/* ================= NAV ================= */
+let currentView = "dashboard";
+function renderNav(){
+  $("#mainNav").innerHTML = NAV.map(([id,label,icon]) =>
+    `<button class="nav-btn${id===currentView?" active":""}" data-nav="${id}">${icon}<span>${label}</span></button>`
+  ).join("");
+  $$("#mainNav .nav-btn").forEach(b => b.addEventListener("click", () => go(b.dataset.nav)));
+}
+function go(id){
+  currentView = id;
+  $$(".view").forEach(v => v.classList.remove("active"));
+  $("#view-"+id).classList.add("active");
+  renderNav();
+  render();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function render(){ RENDER[currentView](); }
+
+/* ================= DASHBOARD ================= */
+function rsvpPill(r){
+  const cls = r==="Confirmed"?"good":(r==="Declined"?"bad":"warn");
+  return `<span class="pill ${cls}">${esc(r)}</span>`;
+}
+const RENDER = {};
+RENDER.dashboard = function(){
+  const el = $("#view-dashboard");
+  const du = daysUntil(S.settings.holidayDate);
+  const duText = du > 1 ? du + " days to go" : du === 1 ? "Tomorrow!" : du === 0 ? "Today!" : Math.abs(du) + " days ago";
+  const gs = groceryStats();
+  const spent = totalSpent(), budget = +S.settings.budgetTotal||0;
+  const bPct = budget ? Math.min(100, Math.round(spent/budget*100)) : 0;
+  const diets = allDiets();
+  const dietList = Object.entries(diets);
+  const upcoming = S.tasks.filter(t=>!t.done).sort((a,b)=>a.datetime.localeCompare(b.datetime)).slice(0,3);
+  el.innerHTML = `
+    <div class="page-head"><h2>${esc(S.settings.holidayName)}</h2><p>${fmtDate(S.settings.holidayDate)} · Serving at ${esc(S.settings.servingTime)} · Your holiday command center</p></div>
+    <div class="grid cols-3" style="margin-bottom:14px;">
+      <div class="card countdown-hero" style="grid-column:span 1;">
+        <div class="sub" style="margin-bottom:8px;">Countdown</div>
+        <div class="countdown-big">${duText.split(" ")[0]} <small>${esc(duText.split(" ").slice(1).join(" ").toUpperCase()||"")}</small></div>
+        <div class="sub" style="margin-top:8px;">${fmtDate(S.settings.holidayDate)}</div>
+      </div>
+      <div class="card stat-card"><div class="stat-num">${confirmedHeadcount()}</div><div class="stat-label">Confirmed guests</div><div class="sub" style="margin-top:8px;">${S.guests.length} parties on the list</div></div>
+      <div class="card stat-card"><div class="stat-num">${S.dishes.length}</div><div class="stat-label">Dishes planned</div><div class="sub" style="margin-top:8px;">${COURSES.map(c=>S.dishes.filter(d=>d.course===c).length+" "+c.toLowerCase()).join(" · ")}</div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Grocery progress</h3><div class="sub">${gs.done} of ${gs.total} items checked off</div>
+        <div class="progress" style="margin:12px 0 6px;"><i style="width:${gs.pct}%"></i></div>
+        <div class="sub">${gs.pct}% complete</div>
+        <div style="margin-top:12px;"><button class="btn small" data-go="grocery">${ICONS.grocery} Open grocery list</button></div>
+      </div>
+      <div class="card">
+        <h3>Budget snapshot</h3><div class="sub">${money(spent)} of ${money(budget)} planned</div>
+        <div class="progress${bPct>90?"":" good"}" style="margin:12px 0 6px;"><i style="width:${bPct}%"></i></div>
+        <div class="sub">${bPct}% of budget used</div>
+        <div style="margin-top:12px;"><button class="btn small" data-go="budget">${ICONS.budget} Open budget</button></div>
+      </div>
+    </div>
+    <div class="grid cols-2" style="margin-top:14px;">
+      <div class="card">
+        <h3>Up next</h3><div class="sub">Your next timeline tasks</div><div class="divider"></div>
+        ${upcoming.length ? upcoming.map(t=>`
+          <div class="row-item"><div class="row-main">
+            <div class="row-title">${esc(t.title)}</div>
+            <div class="row-meta">${fmtDateTime(t.datetime)}</div>
+          </div><button class="icon-btn" data-done-task="${t.id}" title="Mark done">${ICONS.check}</button></div>`).join("")
+        : `<div class="empty">${ICONS.check}<br>All tasks complete. Enjoy the feast!</div>`}
+        <div style="margin-top:12px;"><button class="btn small ghost" data-go="timeline">Full timeline →</button></div>
+      </div>
+      <div class="card">
+        <h3>Dietary needs</h3><div class="sub">Across confirmed guests</div><div class="divider"></div>
+        ${dietList.length ? dietList.map(([d,n])=>`
+          <div class="row-item"><div class="row-main"><div class="row-title">${esc(d)}</div></div>
+          <span class="pill warn">${n} guest${n>1?"s":""}</span></div>`).join("")
+        : `<div class="empty">${ICONS.guests}<br>No dietary restrictions recorded.</div>`}
+        ${dietList.length?`<div class="alert-strip" style="margin-top:12px;">${ICONS.alert}<span>Double-check dishes against these needs before finalizing the menu.</span></div>`:""}
+      </div>
+    </div>`;
+  $$("[data-go]", el).forEach(b => b.addEventListener("click", ()=>go(b.dataset.go)));
+  $$("[data-done-task]", el).forEach(b => b.addEventListener("click", ()=>{
+    const t = S.tasks.find(x=>x.id===b.dataset.doneTask); if(t){ t.done=true; save(); render(); toast("Task marked done"); }
+  }));
+};
+
+/* ================= MENU ================= */
+RENDER.menu = function(){
+  const el = $("#view-menu");
+  el.innerHTML = `
+    <div class="page-head"><h2>Menu Planner</h2><p>Plan every course, assign cooks, and attach ingredients — the grocery list builds itself.</p></div>
+    <div class="toolbar">
+      <button class="btn primary" id="addDish">${ICONS.plus} Add dish</button><span class="spacer"></span>
+      <span class="kbd-hint">${S.dishes.length} dishes · ${S.dishes.reduce((a,d)=>a+(d.ingredients||[]).length,0)} ingredients total</span>
+    </div>
+    ${COURSES.map(course => {
+      const dishes = S.dishes.filter(d=>d.course===course);
+      return `<div class="section-title">${course} · ${dishes.length}</div>
+      <div class="grid cols-2">${dishes.map(d=>`
+        <div class="card hoverable">
+          <div style="display:flex; gap:10px; align-items:flex-start;">
+            <div class="row-main">
+              <div class="row-title" style="font-size:16px;">${esc(d.name)}</div>
+              <div class="row-meta">Serves ${esc(d.servings)}${d.cook?` · Cook: ${esc(d.cook)}`:""} · ${(d.ingredients||[]).length} ingredients</div>
+              ${d.notes?`<div class="row-meta" style="font-style:italic;">“${esc(d.notes)}”</div>`:""}
+            </div>
+            <button class="icon-btn" data-edit-dish="${d.id}" title="Edit">${ICONS.edit}</button>
+            <button class="icon-btn danger" data-del-dish="${d.id}" title="Delete">${ICONS.trash}</button>
+          </div>
+          <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="pill accent">${esc(d.course)}</span>
+            ${S.recipes[d.id]?`<button class="btn small ghost" data-view-recipe="${d.id}">View recipe →</button>`:`<button class="btn small ghost" data-add-recipe="${d.id}">+ Add recipe</button>`}
+          </div>
+        </div>`).join("") || `<div class="empty" style="grid-column:1/-1; padding:20px;">No ${course.toLowerCase()} yet — <button class="btn small ghost" data-add-course="${course}">add one</button></div>`}
+      </div>`;
+    }).join("")}`;
+  $("#addDish").addEventListener("click", ()=>dishModal());
+  $$("[data-add-course]", el).forEach(b=>b.addEventListener("click",()=>dishModal(null,b.dataset.addCourse)));
+  $$("[data-edit-dish]", el).forEach(b=>b.addEventListener("click",()=>dishModal(b.dataset.editDish)));
+  $$("[data-del-dish]", el).forEach(b=>b.addEventListener("click",()=>{
+    if(confirm("Delete this dish? Its ingredients will leave the grocery list.")){
+      S.dishes = S.dishes.filter(d=>d.id!==b.dataset.delDish); save(); render(); toast("Dish deleted");
+    }
+  }));
+  $$("[data-view-recipe]", el).forEach(b=>b.addEventListener("click",()=>{ currentRecipeDish = b.dataset.viewRecipe; go("recipes"); }));
+  $$("[data-add-recipe]", el).forEach(b=>b.addEventListener("click",()=>{ currentRecipeDish = b.dataset.addRecipe; go("recipes"); setTimeout(()=>recipeModal(currentRecipeDish),80); }));
+};
+function dishModal(id, presetCourse){
+  const d = id ? dishById(id) : {name:"", course:presetCourse||"Mains", servings:8, cook:"", notes:"", ingredients:[]};
+  const ings = (d.ingredients||[]).map(i=>({...i}));
+  openModal(`
+    <h3>${id?"Edit dish":"Add dish"}</h3><div class="m-sub">Dishes power the grocery list, recipes and timeline.</div>
+    <div class="field-row">
+      <div class="field"><label>Dish name</label><input id="f-name" value="${esc(d.name)}" placeholder="e.g. Honey-Glazed Ham"></div>
+      <div class="field"><label>Course</label><select id="f-course">${COURSES.map(c=>`<option${c===d.course?" selected":""}>${c}</option>`).join("")}</select></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Servings</label><input id="f-serv" type="number" min="1" value="${esc(d.servings)}"></div>
+      <div class="field"><label>Assigned cook</label><input id="f-cook" value="${esc(d.cook)}" placeholder="Who's making it?"></div>
+    </div>
+    <div class="field"><label>Notes</label><input id="f-notes" value="${esc(d.notes)}" placeholder="Optional tip"></div>
+    <div class="section-title">Ingredients</div>
+    <div id="ingList"></div>
+    <button class="btn small" id="addIng">${ICONS.plus} Add ingredient</button>
+    <div class="modal-actions">
+      <button class="btn ghost" id="mCancel">Cancel</button>
+      <button class="btn primary" id="mSave">${ICONS.check} Save dish</button>
+    </div>`, true);
+  const list = $("#ingList");
+  function drawIngs(){
+    list.innerHTML = ings.map((g,i)=>`
+      <div class="ing-row">
+        <input data-i="${i}" data-k="name" value="${esc(g.name)}" placeholder="Ingredient">
+        <input data-i="${i}" data-k="qty" type="number" step="any" min="0" value="${esc(g.qty)}" placeholder="Qty">
+        <input data-i="${i}" data-k="unit" value="${esc(g.unit)}" placeholder="Unit" class="hide-sm">
+        <select data-i="${i}" data-k="section" class="hide-sm">${SECTIONS.map(s=>`<option${s===g.section?" selected":""}>${s}</option>`).join("")}</select>
+        <button class="icon-btn danger" data-del-ing="${i}">${ICONS.x}</button>
+      </div>`).join("");
+    $$("input,select", list).forEach(inp=>inp.addEventListener("input",()=>{
+      ings[+inp.dataset.i][inp.dataset.k] = inp.dataset.k==="qty" ? (+inp.value||0) : inp.value;
+    }));
+    $$("[data-del-ing]", list).forEach(b=>b.addEventListener("click",()=>{ ings.splice(+b.dataset.delIng,1); drawIngs(); }));
+  }
+  drawIngs();
+  $("#addIng").addEventListener("click",()=>{ ings.push({name:"",qty:0,unit:"",section:"Produce"}); drawIngs(); });
+  $("#mCancel").addEventListener("click", closeModal);
+  $("#mSave").addEventListener("click",()=>{
+    const name = $("#f-name").value.trim();
+    if(!name){ toast("Give the dish a name"); return; }
+    const clean = ings.filter(g=>g.name.trim()).map(g=>({name:g.name.trim(), qty:+g.qty||0, unit:g.unit.trim(), section:g.section}));
+    const obj = {id: id||uid(), name, course:$("#f-course").value, servings:+$("#f-serv").value||8, cook:$("#f-cook").value.trim(), notes:$("#f-notes").value.trim(), ingredients:clean};
+    if(id){ const ix = S.dishes.findIndex(x=>x.id===id); S.dishes[ix]=obj; } else S.dishes.push(obj);
+    save(); closeModal(); render(); toast("Dish saved — grocery list updated");
+  });
+}
+</script>
+<script>
+"use strict";
+/* ================= GUESTS ================= */
+RENDER.guests = function(){
+  const el = $("#view-guests");
+  const hc = confirmedHeadcount();
+  el.innerHTML = `
+    <div class="page-head"><h2>Guest List</h2><p>${hc} confirmed guests · track RSVPs and dietary needs in one place.</p></div>
+    <div class="toolbar"><button class="btn primary" id="addGuest">${ICONS.plus} Add guest</button></div>
+    <div class="card"><div id="guestRows">
+      ${S.guests.map(g=>`
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-title">${esc(g.name)}</div>
+          <div class="row-meta">${+g.adults||0} adult${(+g.adults||0)!==1?"s":""}${+g.kids?` · ${g.kids} kid${(+g.kids)!==1?"s":""}`:""}${(g.diets||[]).length?` · ${g.diets.map(esc).join(", ")}`:""}${g.notes?` · ${esc(g.notes)}`:""}</div>
+        </div>
+        ${rsvpPill(g.rsvp)}
+        <button class="icon-btn" data-edit-g="${g.id}" title="Edit">${ICONS.edit}</button>
+        <button class="icon-btn danger" data-del-g="${g.id}" title="Delete">${ICONS.trash}</button>
+      </div>`).join("") || `<div class="empty">${ICONS.guests}<br>No guests yet.</div>`}
+    </div></div>`;
+  $("#addGuest").addEventListener("click", ()=>guestModal());
+  $$("[data-edit-g]", el).forEach(b=>b.addEventListener("click",()=>guestModal(b.dataset.editG)));
+  $$("[data-del-g]", el).forEach(b=>b.addEventListener("click",()=>{
+    if(confirm("Remove this guest?")){ S.guests=S.guests.filter(g=>g.id!==b.dataset.delG); save(); render(); toast("Guest removed"); }
+  }));
+};
+function guestModal(id){
+  const g = id ? S.guests.find(x=>x.id===id) : {name:"", adults:2, kids:0, diets:[], rsvp:"Invited", notes:""};
+  openModal(`
+    <h3>${id?"Edit guest":"Add guest"}</h3><div class="m-sub">Headcount drives servings; diets appear on the dashboard.</div>
+    <div class="field"><label>Name / party</label><input id="g-name" value="${esc(g.name)}" placeholder="e.g. The Nguyen Family"></div>
+    <div class="field-row">
+      <div class="field"><label>Adults</label><input id="g-ad" type="number" min="0" value="${esc(g.adults)}"></div>
+      <div class="field"><label>Kids</label><input id="g-kid" type="number" min="0" value="${esc(g.kids)}"></div>
+    </div>
+    <div class="field"><label>RSVP status</label><select id="g-rsvp">${RSVP.map(r=>`<option${r===g.rsvp?" selected":""}>${r}</option>`).join("")}</select></div>
+    <div class="field"><label>Dietary restrictions</label>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+      ${DIETS.map(d=>`<label style="display:flex; align-items:center; gap:6px; font-weight:500; color:var(--ink); margin:0; font-size:13.5px;"><input type="checkbox" data-diet="${d}"${(g.diets||[]).includes(d)?" checked":""}> ${d}</label>`).join("")}
+      </div></div>
+    <div class="field"><label>Notes</label><input id="g-notes" value="${esc(g.notes)}" placeholder="Optional"></div>
+    <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Save guest</button></div>`);
+  $("#mCancel").addEventListener("click", closeModal);
+  $("#mSave").addEventListener("click",()=>{
+    const name = $("#g-name").value.trim(); if(!name){ toast("Add a name"); return; }
+    const diets = $$("[data-diet]:checked").map(c=>c.dataset.diet);
+    const obj = {id:id||uid(), name, adults:+$("#g-ad").value||0, kids:+$("#g-kid").value||0, diets, rsvp:$("#g-rsvp").value, notes:$("#g-notes").value.trim()};
+    if(id){ S.guests[S.guests.findIndex(x=>x.id===id)]=obj; } else S.guests.push(obj);
+    save(); closeModal(); render(); toast("Guest saved");
+  });
+}
+
+/* ================= GROCERY ================= */
+RENDER.grocery = function(){
+  const el = $("#view-grocery");
+  const items = consolidatedGrocery();
+  const gs = groceryStats();
+  const bySec = {};
+  items.forEach(i=>{ (bySec[i.section]=bySec[i.section]||[]).push(i); });
+  el.innerHTML = `
+    <div class="page-head"><h2>Grocery List</h2><p>Auto-built from your menu's ingredients. Check items off as you shop.</p></div>
+    <div class="toolbar">
+      <button class="btn primary" id="addManual">${ICONS.plus} Add item</button>
+      <button class="btn" id="regen">${ICONS.wand} Rebuild from menu</button><span class="spacer"></span>
+      <span class="kbd-hint">${gs.done}/${gs.total} done</span>
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3>Shopping progress</h3><span class="pill ${gs.pct===100?"good":"accent"}">${gs.pct}%</span>
+      </div>
+      <div class="progress${gs.pct===100?" good":""}"><i style="width:${gs.pct}%"></i></div>
+    </div>
+    ${SECTIONS.filter(s=>bySec[s]&&bySec[s].length).map(sec=>`
+      <div class="section-title">${sec}</div>
+      <div class="card" style="padding:8px 18px;">
+        ${bySec[sec].map(i=>{
+          const checked = !!S.groceryChecked[i.key];
+          const qtyTxt = ((i.qty? (Number.isInteger(i.qty)?i.qty:(Math.round(i.qty*100)/100))+" ":"") + (i.unit?i.unit+" ":"")).trim();
+          return `<label class="check-line${checked?" done":""}">
+            <input type="checkbox" data-gkey="${esc(i.key)}"${checked?" checked":""}>
+            <span><strong>${esc(i.name)}</strong>${qtyTxt?` — ${esc(qtyTxt)}`:""}
+            ${i.auto?`<span class="row-meta"> · for ${i.from.map(esc).join(", ")}</span>`:` <span class="pill neutral">added</span>`}
+            ${!i.auto?`<button class="icon-btn danger" style="width:26px;height:26px;margin-left:8px;" data-del-man="${i.manId}" title="Remove">${ICONS.x}</button>`:""}</span>
+          </label>`;
+        }).join("")}
+      </div>`).join("") || `<div class="card"><div class="empty">${ICONS.grocery}<br>No grocery items yet — add dishes with ingredients first.</div></div>`}`;
+  $$("[data-gkey]", el).forEach(c=>c.addEventListener("change",()=>{
+    if(c.checked) S.groceryChecked[c.dataset.gkey]=true; else delete S.groceryChecked[c.dataset.gkey];
+    save(); render();
+  }));
+  $$("[data-del-man]", el).forEach(b=>b.addEventListener("click",e=>{
+    e.preventDefault();
+    S.groceryManual = S.groceryManual.filter(m=>m.id!==b.dataset.delMan);
+    delete S.groceryChecked["man|"+b.dataset.delMan];
+    save(); render(); toast("Item removed");
+  }));
+  $("#addManual").addEventListener("click",()=>{
+    openModal(`<h3>Add grocery item</h3><div class="m-sub">Manual additions appear under “added”.</div>
+      <div class="field"><label>Item</label><input id="mi-name" placeholder="e.g. Holiday napkins"></div>
+      <div class="field-row">
+        <div class="field"><label>Qty</label><input id="mi-qty" type="number" step="any" min="0" value="1"></div>
+        <div class="field"><label>Unit</label><input id="mi-unit" placeholder="pcs, packs…"></div>
+      </div>
+      <div class="field"><label>Store section</label><select id="mi-sec">${SECTIONS.map(s=>`<option>${s}</option>`).join("")}</select></div>
+      <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Add</button></div>`);
+    $("#mCancel").addEventListener("click", closeModal);
+    $("#mSave").addEventListener("click",()=>{
+      const name=$("#mi-name").value.trim(); if(!name){toast("Name the item");return;}
+      S.groceryManual.push({id:uid(), name, qty:+$("#mi-qty").value||1, unit:$("#mi-unit").value.trim(), section:$("#mi-sec").value});
+      save(); closeModal(); render(); toast("Item added");
+    });
+  });
+  $("#regen").addEventListener("click",()=>{ render(); toast("Grocery list rebuilt from menu"); });
+};
+</script>
+<script>
+"use strict";
+/* ================= RECIPES ================= */
+let currentRecipeDish = null;
+RENDER.recipes = function(){
+  const el = $("#view-recipes");
+  const withR = S.dishes.filter(d=>S.recipes[d.id]);
+  const withoutR = S.dishes.filter(d=>!S.recipes[d.id]);
+  const sel = currentRecipeDish && dishById(currentRecipeDish) ? currentRecipeDish : (withR[0]&&withR[0].id);
+  currentRecipeDish = sel||null;
+  const r = sel ? S.recipes[sel] : null;
+  const d = sel ? dishById(sel) : null;
+  el.innerHTML = `
+    <div class="page-head"><h2>Recipe Cards</h2><p>Ingredients, steps and timings for every dish — all in one place on cooking day.</p></div>
+    <div class="toolbar"><span class="kbd-hint">Select a dish:</span>
+      <select id="recipeSel" style="max-width:320px;">
+        ${S.dishes.map(x=>`<option value="${x.id}"${x.id===sel?" selected":""}>${esc(x.name)}${S.recipes[x.id]?"":" (no recipe)"}</option>`).join("")}
+      </select><span class="spacer"></span>
+      ${d?`<button class="btn" id="editRecipe">${ICONS.edit} ${r?"Edit recipe":"Add recipe"}</button>`:""}
+    </div>
+    ${d ? (r ? `
+    <div class="grid cols-3" style="margin-bottom:14px;">
+      <div class="card stat-card"><div class="stat-num">${r.prepMin||0}<span style="font-size:16px;"> min</span></div><div class="stat-label">Prep time</div></div>
+      <div class="card stat-card"><div class="stat-num">${r.cookMin||0}<span style="font-size:16px;"> min</span></div><div class="stat-label">Cook time</div></div>
+      <div class="card stat-card"><div class="stat-num">${r.servings||d.servings}</div><div class="stat-label">Servings</div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><h3>Ingredients</h3><div class="divider"></div>
+        ${(r.ingredients||[]).map(i=>`<div class="check-line"><span><strong>${esc(i.name)}</strong>${i.qty?` — ${esc(i.qty)}`:""}</span></div>`).join("")||`<div class="empty">No ingredients listed.</div>`}
+      </div>
+      <div class="card"><h3>Method</h3><div class="divider"></div>
+        ${(r.steps||[]).map((s,i)=>`<div class="step-row"><div class="step-num">${i+1}</div><div style="padding-top:6px;">${esc(s)}</div></div>`).join("")||`<div class="empty">No steps yet.</div>`}
+        ${r.notes?`<div class="alert-strip" style="margin-top:14px;">${ICONS.alert}<span>${esc(r.notes)}</span></div>`:""}
+      </div>
+    </div>` : `
+    <div class="card"><div class="empty">${ICONS.recipes}<br><strong>${esc(d.name)}</strong> has no recipe card yet.<br><br><button class="btn primary" id="editRecipe2">${ICONS.plus} Add recipe</button></div></div>`)
+    : `<div class="card"><div class="empty">${ICONS.recipes}<br>Add a dish in the Menu first.</div></div>`}
+    ${withoutR.length?`<div class="section-title">Dishes without recipes</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">${withoutR.map(x=>`<button class="btn small" data-mk-recipe="${x.id}">+ ${esc(x.name)}</button>`).join("")}</div>`:""}`;
+  const sel2 = $("#recipeSel");
+  if(sel2) sel2.addEventListener("change",()=>{ currentRecipeDish = sel2.value; render(); });
+  const er = $("#editRecipe"); if(er) er.addEventListener("click",()=>recipeModal(sel));
+  const er2 = $("#editRecipe2"); if(er2) er2.addEventListener("click",()=>recipeModal(sel));
+  $$("[data-mk-recipe]", el).forEach(b=>b.addEventListener("click",()=>{ currentRecipeDish=b.dataset.mkRecipe; render(); setTimeout(()=>recipeModal(currentRecipeDish),80); }));
+};
+function recipeModal(dishId){
+  const d = dishById(dishId); if(!d) return;
+  const r = S.recipes[dishId] || {prepMin:20, cookMin:30, servings:d.servings||8, ingredients:(d.ingredients||[]).map(i=>({name:i.name, qty:(([i.qty,i.unit].filter(Boolean)).join(" "))})), steps:[], notes:""};
+  const ings = (r.ingredients||[]).map(i=>({...i}));
+  const steps = (r.steps||[]).slice();
+  openModal(`
+    <h3>Recipe — ${esc(d.name)}</h3><div class="m-sub">Timings feed the cooking timeline's auto-scheduler.</div>
+    <div class="field-row">
+      <div class="field"><label>Prep (min)</label><input id="r-prep" type="number" min="0" value="${esc(r.prepMin)}"></div>
+      <div class="field"><label>Cook (min)</label><input id="r-cook" type="number" min="0" value="${esc(r.cookMin)}"></div>
+    </div>
+    <div class="field"><label>Servings</label><input id="r-serv" type="number" min="1" value="${esc(r.servings)}"></div>
+    <div class="section-title">Ingredients</div><div id="rIngList"></div>
+    <button class="btn small" id="rAddIng">${ICONS.plus} Add ingredient</button>
+    <div class="section-title">Steps</div><div id="rStepList"></div>
+    <button class="btn small" id="rAddStep">${ICONS.plus} Add step</button>
+    <div class="field" style="margin-top:14px;"><label>Chef's notes</label><input id="r-notes" value="${esc(r.notes)}"></div>
+    <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Save recipe</button></div>`, true);
+  const il=$("#rIngList"), sl=$("#rStepList");
+  function dI(){ il.innerHTML=ings.map((g,i)=>`<div class="ing-row" style="grid-template-columns:1fr 1fr 36px;"><input data-i="${i}" data-k="name" value="${esc(g.name)}" placeholder="Ingredient"><input data-i="${i}" data-k="qty" value="${esc(g.qty)}" placeholder="Qty"><button class="icon-btn danger" data-d="${i}">${ICONS.x}</button></div>`).join("");
+    $$("input",il).forEach(x=>x.addEventListener("input",()=>{ings[+x.dataset.i][x.dataset.k]=x.value;}));
+    $$("[data-d]",il).forEach(b=>b.addEventListener("click",()=>{ings.splice(+b.dataset.d,1);dI();})); }
+  function dS(){ sl.innerHTML=steps.map((s,i)=>`<div class="step-row"><div class="step-num">${i+1}</div><textarea data-s="${i}" rows="2" style="flex:1;">${esc(s)}</textarea><button class="icon-btn danger" data-ds="${i}">${ICONS.x}</button></div>`).join("");
+    $$("textarea",sl).forEach(x=>x.addEventListener("input",()=>{steps[+x.dataset.s]=x.value;}));
+    $$("[data-ds]",sl).forEach(b=>b.addEventListener("click",()=>{steps.splice(+b.dataset.ds,1);dS();})); }
+  dI(); dS();
+  $("#rAddIng").addEventListener("click",()=>{ings.push({name:"",qty:""});dI();});
+  $("#rAddStep").addEventListener("click",()=>{steps.push("");dS();});
+  $("#mCancel").addEventListener("click",closeModal);
+  $("#mSave").addEventListener("click",()=>{
+    S.recipes[dishId]={prepMin:+$("#r-prep").value||0, cookMin:+$("#r-cook").value||0, servings:+$("#r-serv").value||d.servings||8,
+      ingredients:ings.filter(g=>g.name.trim()), steps:steps.map(s=>s.trim()).filter(Boolean), notes:$("#r-notes").value.trim()};
+    save(); closeModal(); render(); toast("Recipe saved");
+  });
+}
+
+/* ================= TIMELINE ================= */
+function servingDateTime(){
+  return S.settings.holidayDate + "T" + (S.settings.servingTime||"18:00");
+}
+RENDER.timeline = function(){
+  const el = $("#view-timeline");
+  const tasks = S.tasks.slice().sort((a,b)=>a.datetime.localeCompare(b.datetime));
+  const byDay = {};
+  tasks.forEach(t=>{ const day=t.datetime.slice(0,10); (byDay[day]=byDay[day]||[]).push(t); });
+  el.innerHTML = `
+    <div class="page-head"><h2>Cooking Timeline</h2><p>Serving ${fmtDate(S.settings.holidayDate)} at ${esc(S.settings.servingTime)} — work backwards so everything lands hot.</p></div>
+    <div class="toolbar">
+      <button class="btn primary" id="addTask">${ICONS.plus} Add task</button>
+      <button class="btn gold" id="autoSched">${ICONS.wand} Auto-build from menu</button>
+    </div>
+    ${Object.keys(byDay).sort().map(day=>`
+      <div class="section-title">${fmtDate(day)}</div>
+      <div class="card"><div class="tl">
+        ${byDay[day].map(t=>`
+          <div class="tl-item${t.done?" done":""}">
+            <div class="tl-time">${fmtTime(t.datetime)||"All day"}</div>
+            <div class="tl-title">${esc(t.title)}</div>
+            ${t.notes?`<div class="tl-meta">${esc(t.notes)}</div>`:""}
+            <div style="margin-top:8px; display:flex; gap:8px;">
+              ${t.done?`<span class="pill good">Done</span>`:`<button class="btn small" data-tdone="${t.id}">${ICONS.check} Done</button>`}
+              <button class="icon-btn" data-tedit="${t.id}" title="Edit">${ICONS.edit}</button>
+              <button class="icon-btn danger" data-tdel="${t.id}" title="Delete">${ICONS.trash}</button>
+            </div>
+          </div>`).join("")}
+      </div></div>`).join("") || `<div class="card"><div class="empty">${ICONS.timeline}<br>No tasks yet — add one or auto-build from your menu.</div></div>`}`;
+  $("#addTask").addEventListener("click",()=>taskModal());
+  $$("[data-tdone]",el).forEach(b=>b.addEventListener("click",()=>{S.tasks.find(t=>t.id===b.dataset.tdone).done=true;save();render();toast("Task done");}));
+  $$("[data-tedit]",el).forEach(b=>b.addEventListener("click",()=>taskModal(b.dataset.tedit)));
+  $$("[data-tdel]",el).forEach(b=>b.addEventListener("click",()=>{if(confirm("Delete this task?")){S.tasks=S.tasks.filter(t=>t.id!==b.dataset.tdel);save();render();}}));
+  $("#autoSched").addEventListener("click",()=>{
+    const serve = new Date(servingDateTime());
+    let added = 0;
+    S.dishes.forEach(d=>{
+      const r = S.recipes[d.id]; if(!r) return;
+      const total = (+r.prepMin||0)+(+r.cookMin||0); if(!total) return;
+      const start = new Date(serve.getTime() - total*60000 - 30*60000);
+      const iso = start.toISOString().slice(0,16);
+      if(!S.tasks.some(t=>t.dishId===d.id && t.kind==="cook")){
+        S.tasks.push({id:uid(), title:"Cook: "+d.name, datetime:iso, kind:"cook", dishId:d.id, done:false, notes:`${r.prepMin||0} min prep + ${r.cookMin||0} min cook · 30 min buffer before serving`});
+        added++;
+      }
+    });
+    save(); render();
+    toast(added ? `Added ${added} cooking tasks` : "Nothing new — tasks already exist");
+  });
+};
+function taskModal(id){
+  const t = id ? S.tasks.find(x=>x.id===id) : {title:"", datetime:servingDateTime().slice(0,16), kind:"custom", done:false, notes:""};
+  openModal(`<h3>${id?"Edit task":"Add task"}</h3><div class="m-sub">Schedule prep, cooking and everything in between.</div>
+    <div class="field"><label>Task</label><input id="t-title" value="${esc(t.title)}" placeholder="e.g. Turkey goes in the oven"></div>
+    <div class="field"><label>Date &amp; time</label><input id="t-dt" type="datetime-local" value="${esc(t.datetime)}"></div>
+    <div class="field"><label>Notes</label><input id="t-notes" value="${esc(t.notes||"")}" placeholder="Optional"></div>
+    <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Save task</button></div>`);
+  $("#mCancel").addEventListener("click",closeModal);
+  $("#mSave").addEventListener("click",()=>{
+    const title=$("#t-title").value.trim(); if(!title){toast("Name the task");return;}
+    const obj={id:id||uid(), title, datetime:$("#t-dt").value||servingDateTime().slice(0,16), kind:"custom", done:t.done||false, notes:$("#t-notes").value.trim()};
+    if(id){S.tasks[S.tasks.findIndex(x=>x.id===id)]=obj;}else S.tasks.push(obj);
+    save();closeModal();render();toast("Task saved");
+  });
+}
+</script>
+<script>
+"use strict";
+/* ================= BUDGET ================= */
+RENDER.budget = function(){
+  const el = $("#view-budget");
+  const spent = totalSpent(), budget = +S.settings.budgetTotal||0;
+  const left = budget - spent;
+  const pct = budget ? Math.min(100, Math.round(spent/budget*100)) : 0;
+  const byCat = {};
+  BUDGET_CATS.forEach(c=>byCat[c]=0);
+  S.expenses.forEach(e=>{ byCat[e.cat]=(byCat[e.cat]||0)+(+e.amount||0); });
+  const maxCat = Math.max(1, ...Object.values(byCat));
+  el.innerHTML = `
+    <div class="page-head"><h2>Budget Tracker</h2><p>Keep the feast generous and the spending sane.</p></div>
+    <div class="grid cols-3" style="margin-bottom:14px;">
+      <div class="card stat-card"><div class="stat-num">${money(budget)}</div><div class="stat-label">Total budget</div>
+        <div style="margin-top:10px;"><button class="btn small ghost" id="editBudget">Edit budget</button></div></div>
+      <div class="card stat-card"><div class="stat-num">${money(spent)}</div><div class="stat-label">Spent so far</div><div class="sub" style="margin-top:8px;">${S.expenses.length} expenses logged</div></div>
+      <div class="card stat-card"><div class="stat-num" style="color:${left<0?"var(--bad)":"var(--good)"};">${money(left)}</div><div class="stat-label">${left<0?"Over budget":"Remaining"}</div>
+        <div class="progress" style="margin-top:10px;"><i style="width:${pct}%"></i></div></div>
+    </div>
+    <div class="toolbar"><button class="btn primary" id="addExp">${ICONS.plus} Add expense</button></div>
+    <div class="section-title">Spending by category</div>
+    <div class="card" style="margin-bottom:14px;">
+      ${BUDGET_CATS.map(c=>`
+        <div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:5px;">
+          <strong>${c}</strong><span>${money(byCat[c]||0)}</span></div>
+          <div class="progress"><i style="width:${Math.round((byCat[c]||0)/maxCat*100)}%"></i></div></div>`).join("")}
+    </div>
+    <div class="section-title">Expenses</div>
+    <div class="card"><div>
+      ${S.expenses.slice().reverse().map(e=>`
+        <div class="row-item"><div class="row-main">
+          <div class="row-title">${esc(e.desc)}</div><div class="row-meta">${esc(e.cat)}</div></div>
+          <strong>${money(e.amount)}</strong>
+          <button class="icon-btn danger" data-del-e="${e.id}">${ICONS.trash}</button>
+        </div>`).join("") || `<div class="empty">${ICONS.budget}<br>No expenses yet.</div>`}
+    </div></div>`;
+  $("#addExp").addEventListener("click",()=>{
+    openModal(`<h3>Add expense</h3><div class="m-sub">Log every holiday purchase.</div>
+      <div class="field"><label>Description</label><input id="e-desc" placeholder="e.g. Fresh wreath"></div>
+      <div class="field-row">
+        <div class="field"><label>Category</label><select id="e-cat">${BUDGET_CATS.map(c=>`<option>${c}</option>`).join("")}</select></div>
+        <div class="field"><label>Amount ($)</label><input id="e-amt" type="number" step="0.01" min="0" placeholder="0.00"></div>
+      </div>
+      <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Add expense</button></div>`);
+    $("#mCancel").addEventListener("click",closeModal);
+    $("#mSave").addEventListener("click",()=>{
+      const desc=$("#e-desc").value.trim(), amt=+$("#e-amt").value||0;
+      if(!desc||!amt){toast("Add a description and amount");return;}
+      S.expenses.push({id:uid(), desc, cat:$("#e-cat").value, amount:amt});
+      save();closeModal();render();toast("Expense added");
+    });
+  });
+  $$("[data-del-e]",el).forEach(b=>b.addEventListener("click",()=>{
+    S.expenses=S.expenses.filter(e=>e.id!==b.dataset.delE); save(); render(); toast("Expense removed");
+  }));
+  $("#editBudget").addEventListener("click",()=>{
+    openModal(`<h3>Holiday budget</h3><div class="m-sub">Your total planned spend.</div>
+      <div class="field"><label>Total budget ($)</label><input id="b-total" type="number" step="1" min="0" value="${esc(S.settings.budgetTotal)}"></div>
+      <div class="modal-actions"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn primary" id="mSave">${ICONS.check} Save</button></div>`);
+    $("#mCancel").addEventListener("click",closeModal);
+    $("#mSave").addEventListener("click",()=>{ S.settings.budgetTotal=+$("#b-total").value||0; save();closeModal();render();toast("Budget updated"); });
+  });
+};
+
+/* ================= SETTINGS ================= */
+RENDER.settings = function(){
+  const el = $("#view-settings");
+  el.innerHTML = `
+    <div class="page-head"><h2>Settings</h2><p>Make it yours. Everything saves automatically.</p></div>
+    <div class="grid cols-2">
+      <div class="card"><h3>Holiday details</h3><div class="sub">Drives the countdown and timeline.</div><div class="divider"></div>
+        <div class="field"><label>Holiday name</label><input id="s-name" value="${esc(S.settings.holidayName)}"></div>
+        <div class="field-row">
+          <div class="field"><label>Holiday date</label><input id="s-date" type="date" value="${esc(S.settings.holidayDate)}"></div>
+          <div class="field"><label>Serving time</label><input id="s-time" type="time" value="${esc(S.settings.servingTime)}"></div>
+        </div>
+        <button class="btn primary" id="sSave">${ICONS.check} Save details</button>
+      </div>
+      <div class="card"><h3>Appearance</h3><div class="sub">Theme, font and display mode.</div><div class="divider"></div>
+        <div class="field"><label>Theme</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            ${[["cranberry","Cranberry & Gold"],["forest","Forest Elegance"],["winter","Winter White"],["midnight","Midnight Feast"]].map(([v,l])=>
+              `<button class="btn small${S.settings.theme===v?" primary":""}" data-st="${v}">${l}</button>`).join("")}
+          </div></div>
+        <div class="field"><label>Font</label>
+          <div style="display:flex; gap:8px;">
+            ${[["serif","Serif"],["sans","Sans"],["elegant","Elegant"]].map(([v,l])=>
+              `<button class="btn small${S.settings.font===v?" primary":""}" data-sf="${v}">${l}</button>`).join("")}
+          </div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px; border-color:var(--bad);">
+      <h3>Data</h3><div class="sub">Your data lives only in this browser (localStorage). Nothing is uploaded anywhere.</div><div class="divider"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="exportBtn">${ICONS.check} Export backup (JSON)</button>
+        <button class="btn danger" id="resetBtn">Reset demo data</button>
+      </div>
+    </div>`;
+  $("#sSave").addEventListener("click",()=>{
+    S.settings.holidayName=$("#s-name").value.trim()||"Holiday Dinner";
+    S.settings.holidayDate=$("#s-date").value||S.settings.holidayDate;
+    S.settings.servingTime=$("#s-time").value||S.settings.servingTime;
+    save(); render(); toast("Holiday details saved");
+  });
+  $$("[data-st]",el).forEach(b=>b.addEventListener("click",()=>{setTheme(b.dataset.st);render();}));
+  $$("[data-sf]",el).forEach(b=>b.addEventListener("click",()=>{setFont(b.dataset.sf);render();}));
+  $("#resetBtn").addEventListener("click",()=>{ if(confirm("Reset everything to the sample demo data?")) resetDemo(); });
+  $("#exportBtn").addEventListener("click",()=>{
+    const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download="holiday-meal-planner-backup.json"; a.click(); URL.revokeObjectURL(a.href);
+    toast("Backup downloaded");
+  });
+};
+
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+  renderNav();
+  applyThemeFont();
+  $$(".theme-dot").forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.setTheme)));
+  $$(".font-dock button").forEach(b=>b.addEventListener("click",()=>setFont(b.dataset.setFont)));
+  $("#modeToggle").addEventListener("click",toggleMode);
+  go("dashboard");
+});
+</script>
+
+<!-- ===== LEDGERLOOPSTUDIO DEMO ENTRY LIMIT (10) ===== -->
+<script>
+(function(){
+  var DEMO_LIMIT = 10;
+  var DEMO_MSG = "Demo limit reached (10 entries). Get the full version on Etsy for unlimited entries!";
+  var addCount = 0;
+  function isAddButton(el){
+    if (!el || !el.textContent) return false;
+    var t = el.textContent.trim().toLowerCase();
+    if (t.indexOf('theme') > -1 || t.indexOf('font') > -1 || t.indexOf('mode') > -1) return false;
+    var addWords = ['add', 'save', 'create'];
+    for (var i = 0; i < addWords.length; i++){
+      if (t === addWords[i] || t.indexOf(addWords[i]+' ') === 0) return true;
+    }
+    if (t === '+') return true;
+    return false;
+  }
+  function showMsg(){
+    try { if (typeof toast === 'function') toast(DEMO_MSG); else alert(DEMO_MSG); }
+    catch(e){ alert(DEMO_MSG); }
+  }
+  function updateCounter(){
+    var c = document.getElementById('demo-entry-counter');
+    if (c) c.textContent = addCount + '/' + DEMO_LIMIT + ' entries used';
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest ? e.target.closest('button,input[type="submit"],input[type="button"]') : null;
+    if (!btn || !isAddButton(btn)) return;
+    if (addCount >= DEMO_LIMIT) {
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+      showMsg(); return false;
+    }
+    addCount++; updateCounter();
+  }, true);
+  document.addEventListener('submit', function(e){
+    if (addCount >= DEMO_LIMIT) {
+      e.preventDefault(); e.stopPropagation(); showMsg(); return false;
+    }
+    addCount++; updateCounter();
+  }, true);
+})();
+</script>
+<!-- ===== /DEMO LIMIT ===== -->
+
+</body>
+</html>
